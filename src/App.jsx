@@ -443,17 +443,17 @@ export default function DecoLazerShop() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
             <div>
               <h3 className="text-xl font-serif font-bold mb-4">Déco Lazer</h3>
-              <p className="text-amber-100 text-sm">Artisanat Marocain Authentique</p>
+              <p className="text-amber-100 text-sm">Artisanat Marocain Authentique depuis 1999</p>
             </div>
             <div>
               <h3 className="font-serif font-bold mb-4">Horaires</h3>
-              <p className="text-amber-100 text-sm">Lun - Dimanche : 9h - 18h</p>
-              <p className="text-amber-100 text-sm">Vendredi : Fermé</p>
+              <p className="text-amber-100 text-sm">Lun - Sam: 9h - 18h</p>
+              <p className="text-amber-100 text-sm">Dimanche: Fermé</p>
             </div>
             <div>
               <h3 className="font-serif font-bold mb-4">Contact</h3>
               <p className="text-amber-100 text-sm">📧 adamchb2006@gmail.com</p>
-              <p className="text-amber-100 text-sm">📱 +212 613291567</p>
+              <p className="text-amber-100 text-sm">📱 +212 6XX XXX XXX</p>
             </div>
           </div>
           <div className="border-t border-amber-800 pt-8 text-center text-amber-200 text-sm">
