@@ -110,48 +110,34 @@ export default function DecoLazerShop() {
   const cartTotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
   const cartCount = cart.reduce((sum, item) => sum + item.quantity, 0);
 
-  const handleOrderSubmit = (e) => {
-  e.preventDefault();
-  
-  const cartSummary = cart.map(item => 
-    `${item.name} × ${item.quantity} = ${item.price * item.quantity} DH`
-  ).join('\n');
-  
-  // Créer le formulaire pour FormSubmit
-  const form = new FormData();
-  form.append('name', orderForm.name);
-  form.append('email', orderForm.email);
-  form.append('phone', orderForm.phone);
-  form.append('address', orderForm.address);
-  form.append('products', cartSummary);
-  form.append('total', cartTotal + ' DH');
-  
-  // Envoyer à FormSubmit
-  fetch('https://formsubmit.co/adamchb2006@gmail.com', {
-    method: 'POST',
-    body: form
-  }).then(response => {
-    alert(`Merci ${orderForm.name}! Votre commande a été envoyée. Nous vous contacterons bientôt pour confirmer et organiser le paiement.`);
-    setCart([]);
-    setOrderForm({ name: '', email: '', phone: '', address: '' });
-    setCurrentPage('home');
-  }).catch(error => {
-    alert('Une erreur s\'est produite. Veuillez réessayer.');
-    console.error('Error:', error);
-  });
-};
+  const handleOrderSubmit = async (e) => {
+    e.preventDefault();
+    
     const cartSummary = cart.map(item => 
       `${item.name} × ${item.quantity} = ${item.price * item.quantity} DH`
     ).join('\n');
     
-    const message = `Nouvelle commande de ${orderForm.name}!\n\nDétails:\n${cartSummary}\n\nTotal: ${cartTotal} DH\n\nContact: ${orderForm.phone}\nEmail: ${orderForm.email}\nAdresse: ${orderForm.address}`;
+    const form = new FormData();
+    form.append('name', orderForm.name);
+    form.append('email', orderForm.email);
+    form.append('phone', orderForm.phone);
+    form.append('address', orderForm.address);
+    form.append('products', cartSummary);
+    form.append('total', cartTotal + ' DH');
     
-    console.log('Commande:', message);
-    alert(`Merci ${orderForm.name}! Nous avons reçu votre commande. Nous vous contactons bientôt pour confirmer et organiser le paiement.`);
-    
-    setCart([]);
-    setOrderForm({ name: '', email: '', phone: '', address: '' });
-    setCurrentPage('home');
+    try {
+      await fetch('https://formsubmit.co/adamchb2006@gmail.com', {
+        method: 'POST',
+        body: form
+      });
+      
+      alert(`Merci ${orderForm.name}! Votre commande a été envoyée avec succès. Nous vous contacterons bientôt.`);
+      setCart([]);
+      setOrderForm({ name: '', email: '', phone: '', address: '' });
+      setCurrentPage('home');
+    } catch (error) {
+      alert('Erreur lors de l\'envoi. Veuillez réessayer.');
+    }
   };
 
   const renderHome = () => (
@@ -255,8 +241,8 @@ export default function DecoLazerShop() {
         <div className="bg-amber-700 text-white rounded-lg p-8 text-center">
           <h3 className="text-2xl font-serif font-bold mb-4">Questions ?</h3>
           <p className="mb-4">Contactez-nous par email ou téléphone pour toute demande spéciale ou information.</p>
-          <a href="mailto:contact@decalazer.ma" className="text-amber-100 hover:text-white font-semibold">
-            contact@decalazer.ma
+          <a href="mailto:adamchb2006@gmail.com" className="text-amber-100 hover:text-white font-semibold">
+            adamchb2006@gmail.com
           </a>
         </div>
       </div>
@@ -273,7 +259,7 @@ export default function DecoLazerShop() {
             <ShoppingCart className="w-16 h-16 text-amber-400 mx-auto mb-4 opacity-50" />
             <p className="text-amber-900 text-lg mb-4">Votre panier est vide</p>
             <button
-              onClick={() => setCurrentPage('home')}
+              onClick={() => { setCurrentPage('home'); setShowCart(false); }}
               className="bg-amber-700 hover:bg-amber-800 text-white font-semibold py-2 px-6 rounded transition-all"
             >
               Continuer les Achats
@@ -461,7 +447,7 @@ export default function DecoLazerShop() {
             </div>
             <div>
               <h3 className="font-serif font-bold mb-4">Horaires</h3>
-              <p className="text-amber-100 text-sm">Lun - Dimanche: 10h - 20h</p>
+              <p className="text-amber-100 text-sm">Lun - Dimanche : 9h - 18h</p>
               <p className="text-amber-100 text-sm">Vendredi : Fermé</p>
             </div>
             <div>
