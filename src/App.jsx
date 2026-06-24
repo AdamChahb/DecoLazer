@@ -111,7 +111,35 @@ export default function DecoLazerShop() {
   const cartCount = cart.reduce((sum, item) => sum + item.quantity, 0);
 
   const handleOrderSubmit = (e) => {
-    e.preventDefault();
+  e.preventDefault();
+  
+  const cartSummary = cart.map(item => 
+    `${item.name} × ${item.quantity} = ${item.price * item.quantity} DH`
+  ).join('\n');
+  
+  // Créer le formulaire pour FormSubmit
+  const form = new FormData();
+  form.append('name', orderForm.name);
+  form.append('email', orderForm.email);
+  form.append('phone', orderForm.phone);
+  form.append('address', orderForm.address);
+  form.append('products', cartSummary);
+  form.append('total', cartTotal + ' DH');
+  
+  // Envoyer à FormSubmit
+  fetch('https://formsubmit.co/adamchb2006@gmail.com', {
+    method: 'POST',
+    body: form
+  }).then(response => {
+    alert(`Merci ${orderForm.name}! Votre commande a été envoyée. Nous vous contacterons bientôt pour confirmer et organiser le paiement.`);
+    setCart([]);
+    setOrderForm({ name: '', email: '', phone: '', address: '' });
+    setCurrentPage('home');
+  }).catch(error => {
+    alert('Une erreur s\'est produite. Veuillez réessayer.');
+    console.error('Error:', error);
+  });
+};
     const cartSummary = cart.map(item => 
       `${item.name} × ${item.quantity} = ${item.price * item.quantity} DH`
     ).join('\n');
