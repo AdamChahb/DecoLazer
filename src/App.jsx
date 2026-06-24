@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ShoppingCart, X, Menu, Home, Package, Mail } from 'lucide-react';
+import { ShoppingCart, X, Menu, Home, Mail } from 'lucide-react';
 
 export default function DecoLazerShop() {
   const [cart, setCart] = useState([]);
